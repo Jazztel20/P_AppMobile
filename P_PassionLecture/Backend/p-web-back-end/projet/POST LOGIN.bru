@@ -1,0 +1,23 @@
+meta {
+  name: POST LOGIN
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:3333/user/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "Alloo",
+    "password": "123456789"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

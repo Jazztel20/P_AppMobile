@@ -1,0 +1,7 @@
+1ère page: requete API qui rend le titre, la catégorie, image, etc... -> page d'accueil affichage du livre
+2ème page: quand on clique requete qui rend le contenu du livre -> page de lecture (liseuse) format Epub
+on peut créer des tags du genre favori, meilleur livre etc et on peut aussi filtrer par ces tags là
+
+
+Lien maquette:
+https://www.figma.com/design/CStS14PcfUgWc7hyMkWOw4/Maquette-P_App?node-id=0-1&p=f&t=1Nd63gNi7tPeLRGD-0
