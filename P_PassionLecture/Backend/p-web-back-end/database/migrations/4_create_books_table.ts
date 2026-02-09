@@ -11,6 +11,8 @@ export default class extends BaseSchema {
 
       table.specificType('epub_file', 'MEDIUMBLOB').notNullable()
       table.specificType('cover_image', 'MEDIUMBLOB').nullable()
+      table.timestamp('created_at')
+      table.timestamp('updated_at')
 
       table
         .integer('category_id')

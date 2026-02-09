@@ -27,9 +27,18 @@ export default class Book extends BaseModel {
   @column() 
   declare editor: string
 
+  @column()
+  declare author: string
+
   //number = Small Int
   @column() 
   declare editionYear: number
+
+  @column()
+  declare epubFile: Buffer // Représente le BLOB en TypeScript
+
+  @column()
+  declare coverImage: Buffer
 
   @column() 
   declare imagePath: string
@@ -60,6 +69,4 @@ export default class Book extends BaseModel {
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime
 }
