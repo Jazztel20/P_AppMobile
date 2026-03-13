@@ -87,8 +87,7 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-03-09T07:14:01.074Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -101,8 +100,7 @@
               "ViewState": "AgIAAFgAAAAAAAAAAAAmwA4AAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-09T07:17:11.929Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -126,8 +124,7 @@
               "RelativeToolTip": "Views\\HomePage.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-03-09T10:11:56.351Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:56.351Z"
             },
             {
               "$type": "Document",
@@ -151,8 +148,7 @@
               "RelativeToolTip": "Views\\BookInfoPage.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-03-09T10:11:46.824Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:46.824Z"
             },
             {
               "$type": "Document",
@@ -164,8 +160,7 @@
               "RelativeToolTip": "Views\\AboutPage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-09T10:11:44.058Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:44.058Z"
             },
             {
               "$type": "Document",
@@ -177,8 +172,7 @@
               "RelativeToolTip": "Views\\AboutPage.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-03-09T10:11:41.184Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:41.184Z"
             },
             {
               "$type": "Document",
@@ -250,8 +244,7 @@
               "RelativeToolTip": "Views\\BooksPage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-09T08:54:03.134Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T08:54:03.134Z"
             },
             {
               "$type": "Document",

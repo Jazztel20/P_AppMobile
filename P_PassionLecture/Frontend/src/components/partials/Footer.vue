@@ -17,7 +17,7 @@
     <div class="footer-column">
       <div class="footer-title"><a href="#">Contact</a></div>
       <div>
-        <a href="mailto:vincent.panzeta@eduvaud.ch">vincent.panzeta@eduvaud.ch</a>
+        <a href="mailto:matias.denis@eduvaud.ch">vincent.panzeta@eduvaud.ch</a>
       </div>
       <div>+41.7x.xxx.xx.xx</div>
     </div>
