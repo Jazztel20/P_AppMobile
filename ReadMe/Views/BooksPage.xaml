@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ReadMe.Views.BooksPage"
+             Title="Sélectionner un e-book">
+
+    <AbsoluteLayout>
+
+        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1"
+              AbsoluteLayout.LayoutFlags="All"
+              RowDefinitions="60,*">
+
+            <HorizontalStackLayout Grid.Row="0"
+                                   Padding="10"
+                                   Spacing="10">
+                <Button Text="Filtres ▼"
+                        Clicked="ToggleCategories"
+                        BackgroundColor="#333333"
+                        TextColor="White"
+                        HorizontalOptions="Start"
+                        WidthRequest="120"/>
+
+                <Button Text="Trier"
+                        BackgroundColor="#555555"
+                        Clicked="SortBooks"
+                        TextColor="White"
+                        HorizontalOptions="Start"
+                        WidthRequest="80"/>
+                <Label Text="Plus récent" x:Name="sortText" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+            <Border Grid.Row="1"
+                    StrokeThickness="1"
+                    BackgroundColor="Transparent"
+                    StrokeShape="RoundRectangle 12"
+                    Margin="10"
+                    Padding="20">
+                <CollectionView
+                     x:Name="BooksCollectionView"
+                     SelectionMode="Single"
+                     SelectionChanged="OnBookSelected">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border StrokeThickness="0.5"
+                                    BackgroundColor="Transparent"
+                                    StrokeShape="RoundRectangle 8"
+                                    Padding="10"
+                                    Margin="0,0,0,10">
+                                <Grid ColumnDefinitions="80, *" ColumnSpacing="15">
+
+                                    <Border Grid.Column="0"
+                                            StrokeShape="RoundRectangle 4"
+                                            HeightRequest="100"
+                                            WidthRequest="70"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center">
+                                        <Image Source="{Binding ImageUrl}" 
+                                                Aspect="AspectFill"/>
+                                    </Border>
+
+                                    <VerticalStackLayout Grid.Column="1" 
+                                 VerticalOptions="Center" 
+                                 Spacing="4">
+
+                                        <Label Text="{Binding Title}" 
+                                               FontSize="18" 
+                                               FontAttributes="Bold"
+                                               LineBreakMode="TailTruncation"
+                                               TextColor="#333333"/>
+
+                                        <HorizontalStackLayout Spacing="5">
+                                            <Label Text="{Binding Author.FirstName}" 
+                                                   FontSize="14" 
+                                                   TextColor="#7F8C8D"/>
+                                            <Label Text="{Binding Author.LastName}" 
+                                                   FontSize="14" 
+                                                   TextColor="#7F8C8D" 
+                                                   FontAttributes="Bold"/>
+                                        </HorizontalStackLayout>
+
+                                        <Label Text="{Binding Category.Label}" 
+                                               FontSize="12" 
+                                               TextColor="#555555"
+                                               Margin="0,5,0,0"/>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <StackLayout HorizontalOptions="Center"
+                                     VerticalOptions="Center">
+                            <Label Text="📚" FontSize="60" HorizontalOptions="Center"/>
+                            <Label Text="Aucun livre" FontSize="18" TextColor="Gray" HorizontalOptions="Center"/>
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </Border>
+        </Grid>
+
+        <Border x:Name="CategoriesFolder"
+                Stroke="LightGray"
+                StrokeThickness="1"
+                Padding="10"
+                Margin="10"
+                BackgroundColor="White"
+                IsVisible="False"
+                AbsoluteLayout.LayoutBounds="0,60,1,680"
+                AbsoluteLayout.LayoutFlags="WidthProportional">
+            <ScrollView>
+                <Grid RowDefinitions="Auto, Auto, Auto">
+                    <HorizontalStackLayout Grid.Row="0" Spacing="10" Margin="0,5,0,10">
+                        <CheckBox x:Name="EnableFiltersCheckBox" CheckedChanged="OnEnableFiltersChanged"/>
+                        <Label Text="Activer les filtres" VerticalOptions="Center" FontAttributes="Bold"/>
+                    </HorizontalStackLayout>
+                    
+                    <VerticalStackLayout Grid.Row="1" Spacing="5">
+                        <Label Text="Catégories" FontAttributes="Bold" FontSize="16"/>
+                        <BoxView HeightRequest="1" Color="LightGray" HorizontalOptions="Fill"/>
+                        <CollectionView x:Name="CategoryCollectionView">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <HorizontalStackLayout Spacing="10" Margin="0,5">
+                                        <CheckBox IsChecked="{Binding IsSelected}" CheckedChanged="OnFilterSelectionChanged"/>
+                                        <Label Text="{Binding Label}" VerticalOptions="Center"/>
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Grid.Row="2" Spacing="5" Margin="0,10,0,0">
+                        <Label Text="Tags" FontAttributes="Bold" FontSize="16"/>
+                        <BoxView HeightRequest="1" Color="LightGray" HorizontalOptions="Fill"/>
+                        <CollectionView x:Name="TagCollectionView">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <HorizontalStackLayout Spacing="10" Margin="0,5">
+                                        <CheckBox IsChecked="{Binding IsSelected}" CheckedChanged="OnFilterSelectionChanged"/>
+                                        <Label Text="{Binding Name}" VerticalOptions="Center"/>
+                                    </HorizontalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Grid>
+            </ScrollView>
+        </Border>
+
+    </AbsoluteLayout>
+</ContentPage>

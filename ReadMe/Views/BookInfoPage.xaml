@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ReadMe.Views.BookInfoPage"
+             Title="{Binding Title}">
+
+    <AbsoluteLayout>
+        <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                    AbsoluteLayout.LayoutFlags="All"
+                    HorizontalOptions="Center">
+
+            <VerticalStackLayout Padding="20" Spacing="20" HorizontalOptions="Center">
+
+                <Image Source="{Binding ImageUrl, TargetNullValue='placeholder.jpg'}" 
+                       HeightRequest="400" 
+                       WidthRequest="300"
+                       Aspect="AspectFill" />
+
+                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <FlexLayout x:Name="tagFlexLayout" 
+                                Wrap="Wrap" 
+                                Direction="Row" 
+                                JustifyContent="Center"
+                                AlignItems="Center">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Border BackgroundColor="#D3D3D3" 
+                                        Padding="10,5" 
+                                        Margin="5" 
+                                        StrokeThickness="0">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="5" />
+                                    </Border.StrokeShape>
+                                    <Label Text="{Binding Name}" TextColor="Black" />
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+
+                    <Border BackgroundColor="#D3D3D3" 
+                            Padding="8,5" 
+                            HorizontalOptions="Center"
+                            HeightRequest="35"
+                            WidthRequest="45"
+                            StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="5" />
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnAddTagClicked" />
+                        </Border.GestureRecognizers>
+                        <Image Source="plus_icon.png" 
+                               WidthRequest="20" 
+                               HeightRequest="20" 
+                               VerticalOptions="Center" 
+                               HorizontalOptions="Center" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <Label FontSize="18" HorizontalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Auteur : " />
+                            <Span Text="{Binding Author.FirstName}" FontAttributes="Bold" />
+                            <Span Text=" " />
+                            <Span Text="{Binding Author.LastName}" FontAttributes="Bold" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label Text="{Binding NumberOfPages, StringFormat='{0} Pages'}" 
+                       HorizontalOptions="Center" />
+
+                <Button Text="Lire" 
+                        WidthRequest="200" 
+                        HorizontalOptions="Center"
+                        Margin="0,20,0,0"
+                        Clicked="OnReadBookClicked"/>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ContentView x:Name="TagOverlay"
+                     IsVisible="False"
+                     BackgroundColor="#AA000000" 
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All">
+
+            <Border BackgroundColor="#D3D3D3"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="320"
+                    HeightRequest="550"
+                    StrokeShape="RoundRectangle 30">
+
+                <Grid RowDefinitions="Auto, Auto, *, Auto">
+                    <Grid Grid.Row="0" Padding="20" ColumnDefinitions="*, Auto">
+                        <Label Text="Choisir des tags" 
+                               FontAttributes="Bold" 
+                               FontSize="20" 
+                               VerticalOptions="Center"/>
+
+                        <ImageButton Grid.Column="1" 
+                                     Source="cross_icon.png" 
+                                     WidthRequest="25" 
+                                     HeightRequest="25"
+                                     BackgroundColor="Transparent"
+                                     Clicked="OnCloseOverlayClicked"/>
+                    </Grid>
+
+                    <BoxView Grid.Row="0" VerticalOptions="End" HeightRequest="1" Color="Gray" />
+
+                    <Button Grid.Row="1" 
+                            Text="Créer un tag" 
+                            CornerRadius="0" 
+                            BackgroundColor="White" 
+                            TextColor="Black" 
+                            BorderWidth="0.5" 
+                            BorderColor="Gray"
+                            Clicked="OnCreateTagClicked"/>
+
+                    <CollectionView Grid.Row="2" x:Name="AllTagsCollectionView" Margin="10">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*, Auto" Padding="15,10">
+                                    <Label Text="{Binding Name}" VerticalOptions="Center" />
+                                    <CheckBox Grid.Column="1" Color="Black" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <Button Grid.Row="3" 
+                            Text="Enregistrer" 
+                            Margin="20" 
+                            HeightRequest="55" 
+                            CornerRadius="27" 
+                            BackgroundColor="White" 
+                            TextColor="Black" 
+                            FontAttributes="Bold" 
+                            Clicked="OnSaveTagsClicked"/>
+                </Grid>
+            </Border>
+        </ContentView>
+    </AbsoluteLayout>
+</ContentPage>
