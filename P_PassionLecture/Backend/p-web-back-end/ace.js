@@ -6,20 +6,19 @@
 | DO NOT MODIFY THIS FILE AS IT WILL BE OVERRIDDEN DURING THE BUILD
 | PROCESS.
 |
-| See docs.adonisjs.com/guides/typescript-build-process#creating-production-build
-|
-| Since, we cannot run TypeScript source code using "node" binary, we need
-| a JavaScript entrypoint to run ace commands.
-|
-| This file registers the "ts-node/esm" hook with the Node.js module system
-| and then imports the "bin/console.ts" file.
+| Since we cannot run TypeScript source code using the "node" binary, we
+| register a TypeScript transpiler hook (@swc-node/register) – faster than
+| ts-node and compatible with Node 20.x.
 |
 */
 
 /**
- * Register hook to process TypeScript files using ts-node
+ * Register the SWC hook to transpile TypeScript files on the fly.
+ * @swc-node/register is much more compatible with modern AdonisJS than
+ * ts-node-maintained when running on Node 20.11.x.
  */
-import 'ts-node-maintained/register/esm'
+import '@swc-node/register/esm-register'
+register()
 
 /**
  * Import ace console entrypoint

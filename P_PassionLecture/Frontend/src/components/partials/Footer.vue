@@ -1,5 +1,5 @@
 <!-- FOOTER -->
-<script></script>
+<script setup lang="ts"></script>
 
 <template>
   <footer>
@@ -12,7 +12,10 @@
       </div>
     </div>
 
-    <div class="footer-center">© Vibe</div>
+    <div class="footer-center">
+      <router-link to="/" class="footer-brand">ReadME</router-link>
+      <span class="footer-copy">© {{ new Date().getFullYear() }} Read4All – Tous droits réservés</span>
+    </div>
 
     <div class="footer-column">
       <div class="footer-title"><a href="#">Contact</a></div>
@@ -64,6 +67,22 @@ footer {
   text-align: center;
   align-self: center;
   font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-brand {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0172c5;
+  letter-spacing: .04em;
+  text-decoration: none;
+}
+
+.footer-copy {
+  font-size: .72rem;
+  color: #555;
 }
  
 a {

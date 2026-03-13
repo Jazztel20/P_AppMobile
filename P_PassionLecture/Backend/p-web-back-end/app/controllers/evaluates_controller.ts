@@ -3,111 +3,121 @@ import type { HttpContext } from '@adonisjs/core/http'
 
 export default class EvaluatesController {
   /**
-   * Display a list of resource
+   * Liste les évaluations d'un livre
+   * Route: GET /books/:id/evaluates
    */
- async index({ params, response }: HttpContext) {
-  const evaluates = await Evaluate.query()
-    .where('book_id', params.id)   
-    .preload('user')               
+  async index({ params, response }: HttpContext) {
+    const evaluates = await Evaluate.query()
+      .where('book_id', params.id)
+      .preload('user')
 
-  return response.ok(evaluates)
-}
-async AvgRating({ params, response }: HttpContext) {
-  const evaluates = await Evaluate.query()
-    .where('book_id', params.id)
+    return response.ok(evaluates)
+  }
 
-  const averageRating = evaluates.length > 0
-    ? evaluates.reduce((sum, e) => sum + e.note, 0) / evaluates.length
-    : 0
-
-  return response.ok({
-    averageRating,
-    evaluates,
-  })
-}
   /**
-   * Display form to create a new record
+   * Calcule la note moyenne d'un livre
+   * Route: GET /books/:id/AvgRating
    */
-  async create({}: HttpContext) {}
+  async AvgRating({ params, response }: HttpContext) {
+    const evaluates = await Evaluate.query().where('book_id', params.id)
 
-  public async store({ request, auth, response }: HttpContext) {
-    // Récupérer les données envoyées
-    const data = request.only(['book_id', 'content'])
+    const averageRating =
+      evaluates.length > 0
+        ? evaluates.reduce((sum, e) => sum + e.note, 0) / evaluates.length
+        : 0
 
-    // Vérifier que l'utilisateur est authentifié
+    return response.ok({ averageRating, evaluates })
+  }
+
+  /**
+   * Poster une note pour un livre (utilisateur connecté)
+   * Body: { book_id: number, content: number (1-5) }
+   */
+  async store({ request, auth, response }: HttpContext) {
     const user = auth.user
     if (!user) {
-      return response.unauthorized({ message: 'Vous devez être connecté pour commenter.' })
+      return response.unauthorized({ message: 'Vous devez être connecté pour noter.' })
     }
 
-    // Créer le commentaire en liant l'utilisateur
-    const comment = await Evaluate.create({
+    const data = request.only(['book_id', 'content'])
+    const note = Number(data.content)
+
+    if (!data.book_id) {
+      return response.badRequest({ message: 'book_id est requis.' })
+    }
+    if (isNaN(note) || note < 0 || note > 5) {
+      return response.badRequest({ message: 'La note doit être un nombre entre 0 et 5.' })
+    }
+
+    // Upsert: un utilisateur peut mettre à jour sa note existante
+    const existing = await Evaluate.query()
+      .where('book_id', data.book_id)
+      .where('user_id', user.id)
+      .first()
+
+    if (existing) {
+      existing.note = note
+      await existing.save()
+      return response.ok(existing)
+    }
+
+    const evaluate = await Evaluate.create({
       userId: user.id,
       bookId: data.book_id,
-      note: data.content,
+      note,
     })
 
-    return response.created(comment)
+    return response.created(evaluate)
   }
+
   /**
-   * Show individual record
+   * Modifier une évaluation (propriétaire uniquement)
+   * Body: { content: number }
    */
-  async show({ params }: HttpContext) {
-    const evaluate = await Evaluate.query()
-      .preload('book')
-      .preload('user')
-      .where('book_id', params.id)
-      .firstOrFail()
-      
-      return await evaluate
-  }
-  public async update({ params, request, auth, response }: HttpContext) {
+  async update({ params, request, auth, response }: HttpContext) {
     const user = auth.user
     if (!user) {
-      return response.unauthorized({ message: 'Vous devez être connecté pour modifier un commentaire.' })
+      return response.unauthorized({ message: 'Vous devez être connecté pour modifier une note.' })
     }
 
-    // Chercher le commentaire
-    const note = await Evaluate.find(params.id)
-    if (!note) {
-      return response.notFound({ message: 'Commentaire non trouvé.' })
+    const evaluate = await Evaluate.find(params.id)
+    if (!evaluate) {
+      return response.notFound({ message: 'Évaluation non trouvée.' })
     }
 
-    // Vérifier que le commentaire appartient à l'utilisateur
-    if (note.userId !== user.id) {
-      return response.forbidden({ message: 'Vous ne pouvez modifier que vos propres commentaires.' })
+    if (evaluate.userId !== user.id) {
+      return response.forbidden({ message: 'Vous ne pouvez modifier que vos propres notes.' })
     }
 
-    // Mettre à jour le commentaire
-    const data = request.only(['content'])
-    note.note = data.content
-    await note.save()
+    const { content } = request.only(['content'])
+    const note = Number(content)
+    if (!isNaN(note) && note >= 0 && note <= 5) {
+      evaluate.note = note
+    }
+    await evaluate.save()
 
-    return response.ok(note)
+    return response.ok(evaluate)
   }
 
-  public async destroy({ params, auth, response }: HttpContext) {
+  /**
+   * Supprimer une évaluation (propriétaire uniquement)
+   */
+  async destroy({ params, auth, response }: HttpContext) {
     const user = auth.user
     if (!user) {
-      return response.unauthorized({ message: 'Vous devez être connecté pour supprimer un commentaire.' })
+      return response.unauthorized({ message: 'Vous devez être connecté pour supprimer une note.' })
     }
 
-    // Chercher le commentaire
-    const note = await Evaluate.find(params.id)
-    if (!note) {
-      return response.notFound({ message: 'Commentaire non trouvé.' })
+    const evaluate = await Evaluate.find(params.id)
+    if (!evaluate) {
+      return response.notFound({ message: 'Évaluation non trouvée.' })
     }
 
-    // Vérifier que le commentaire appartient à l'utilisateur
-    if (note.userId !== user.id) {
-      return response.forbidden({ message: 'Vous ne pouvez supprimer que vos propres commentaires.' })
+    if (evaluate.userId !== user.id) {
+      return response.forbidden({ message: 'Vous ne pouvez supprimer que vos propres notes.' })
     }
 
-    // Supprimer le commentaire
-    await note.delete()
+    await evaluate.delete()
     return response.noContent()
   }
-
-
-
 }
