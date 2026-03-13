@@ -87,8 +87,7 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-03-09T07:14:01.074Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -114,8 +113,7 @@
               "RelativeToolTip": "Views\\HomePage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-09T10:11:56.927Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:56.927Z"
             },
             {
               "$type": "Document",
@@ -127,8 +125,7 @@
               "RelativeToolTip": "Views\\HomePage.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-03-09T10:11:56.351Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:56.351Z"
             },
             {
               "$type": "Document",
@@ -140,8 +137,7 @@
               "RelativeToolTip": "Views\\BookInfoPage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-09T10:11:47.537Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:47.537Z"
             },
             {
               "$type": "Document",
@@ -153,8 +149,7 @@
               "RelativeToolTip": "Views\\BookInfoPage.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-03-09T10:11:46.824Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:46.824Z"
             },
             {
               "$type": "Document",
@@ -166,8 +161,7 @@
               "RelativeToolTip": "Views\\AboutPage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-09T10:11:44.058Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:44.058Z"
             },
             {
               "$type": "Document",
@@ -179,8 +173,7 @@
               "RelativeToolTip": "Views\\AboutPage.xaml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-03-09T10:11:41.184Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:41.184Z"
             },
             {
               "$type": "Document",
@@ -192,8 +185,7 @@
               "RelativeToolTip": "Models\\Tag.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-09T10:11:33.332Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:33.332Z"
             },
             {
               "$type": "Document",
@@ -205,8 +197,7 @@
               "RelativeToolTip": "Models\\Response.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-09T10:11:32.626Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:32.626Z"
             },
             {
               "$type": "Document",
@@ -218,8 +209,7 @@
               "RelativeToolTip": "Models\\Meta.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-09T10:11:31.914Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:31.914Z"
             },
             {
               "$type": "Document",
@@ -231,8 +221,7 @@
               "RelativeToolTip": "Models\\Category.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-09T10:11:31.089Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:31.089Z"
             },
             {
               "$type": "Document",
@@ -244,8 +233,7 @@
               "RelativeToolTip": "Models\\Author.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-09T10:11:29.427Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:11:29.427Z"
             },
             {
               "$type": "Document",
@@ -257,8 +245,7 @@
               "RelativeToolTip": "Views\\BooksPage.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAFAAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-09T08:54:03.134Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T08:54:03.134Z"
             },
             {
               "$type": "Document",
@@ -270,8 +257,7 @@
               "RelativeToolTip": "Models\\Book.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAQwB0AAABSAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-09T08:53:48.059Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T08:53:48.059Z"
             },
             {
               "$type": "Document",
@@ -283,8 +269,7 @@
               "RelativeToolTip": "Views\\BooksPage.xaml",
               "ViewState": "AgIAAC4AAAAAAAAAAAAiwA8AAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-03-09T08:29:26.921Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T08:29:26.921Z"
             }
           ]
         }

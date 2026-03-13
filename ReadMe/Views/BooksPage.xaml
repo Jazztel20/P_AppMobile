@@ -2,150 +2,338 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ReadMe.Views.BooksPage"
-             Title="Sélectionner un e-book">
+             Title=""
+             BackgroundColor="#E8F4FB">
 
-    <AbsoluteLayout>
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
 
-        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1"
-              AbsoluteLayout.LayoutFlags="All"
-              RowDefinitions="60,*">
-
-            <HorizontalStackLayout Grid.Row="0"
-                                   Padding="10"
-                                   Spacing="10">
-                <Button Text="Filtres ▼"
-                        Clicked="ToggleCategories"
-                        BackgroundColor="#333333"
-                        TextColor="White"
-                        HorizontalOptions="Start"
-                        WidthRequest="120"/>
-
-                <Button Text="Trier"
-                        BackgroundColor="#555555"
-                        Clicked="SortBooks"
-                        TextColor="White"
-                        HorizontalOptions="Start"
-                        WidthRequest="80"/>
-                <Label Text="Plus récent" x:Name="sortText" VerticalOptions="Center"/>
-            </HorizontalStackLayout>
-
-            <Border Grid.Row="1"
-                    StrokeThickness="1"
-                    BackgroundColor="Transparent"
-                    StrokeShape="RoundRectangle 12"
-                    Margin="10"
-                    Padding="20">
-                <CollectionView
-                     x:Name="BooksCollectionView"
-                     SelectionMode="Single"
-                     SelectionChanged="OnBookSelected">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Border StrokeThickness="0.5"
-                                    BackgroundColor="Transparent"
-                                    StrokeShape="RoundRectangle 8"
-                                    Padding="10"
-                                    Margin="0,0,0,10">
-                                <Grid ColumnDefinitions="80, *" ColumnSpacing="15">
-
-                                    <Border Grid.Column="0"
-                                            StrokeShape="RoundRectangle 4"
-                                            HeightRequest="100"
-                                            WidthRequest="70"
-                                            HorizontalOptions="Center"
-                                            VerticalOptions="Center">
-                                        <Image Source="{Binding ImageUrl}" 
-                                                Aspect="AspectFill"/>
-                                    </Border>
-
-                                    <VerticalStackLayout Grid.Column="1" 
-                                 VerticalOptions="Center" 
-                                 Spacing="4">
-
-                                        <Label Text="{Binding Title}" 
-                                               FontSize="18" 
-                                               FontAttributes="Bold"
-                                               LineBreakMode="TailTruncation"
-                                               TextColor="#333333"/>
-
-                                        <HorizontalStackLayout Spacing="5">
-                                            <Label Text="{Binding Author.FirstName}" 
-                                                   FontSize="14" 
-                                                   TextColor="#7F8C8D"/>
-                                            <Label Text="{Binding Author.LastName}" 
-                                                   FontSize="14" 
-                                                   TextColor="#7F8C8D" 
-                                                   FontAttributes="Bold"/>
-                                        </HorizontalStackLayout>
-
-                                        <Label Text="{Binding Category.Label}" 
-                                               FontSize="12" 
-                                               TextColor="#555555"
-                                               Margin="0,5,0,0"/>
-                                    </VerticalStackLayout>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.EmptyView>
-                        <StackLayout HorizontalOptions="Center"
-                                     VerticalOptions="Center">
-                            <Label Text="📚" FontSize="60" HorizontalOptions="Center"/>
-                            <Label Text="Aucun livre" FontSize="18" TextColor="Gray" HorizontalOptions="Center"/>
-                        </StackLayout>
-                    </CollectionView.EmptyView>
-                </CollectionView>
+        <!-- HEADER -->
+        <Grid Grid.Row="0"
+              BackgroundColor="#5BAACC"
+              Padding="12,10"
+              ColumnDefinitions="Auto,*,Auto">
+            <Image Grid.Column="0"
+                   Source="readingghostpng.png"
+                   HeightRequest="44"
+                   WidthRequest="44"
+                   VerticalOptions="Center"/>
+            <Label Grid.Column="1"
+                   Text="README"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+            <Border Grid.Column="2"
+                    BackgroundColor="White"
+                    StrokeShape="RoundRectangle 20"
+                    Padding="8,6">
+                <HorizontalStackLayout Spacing="6">
+                    <Image Source="info.png"
+                           HeightRequest="18"
+                           WidthRequest="18"
+                           VerticalOptions="Center"/>
+                    <Label x:Name="UserLabel"
+                           Text="User 1"
+                           FontSize="13"
+                           TextColor="#333"
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
             </Border>
         </Grid>
 
-        <Border x:Name="CategoriesFolder"
-                Stroke="LightGray"
-                StrokeThickness="1"
-                Padding="10"
-                Margin="10"
-                BackgroundColor="White"
-                IsVisible="False"
-                AbsoluteLayout.LayoutBounds="0,60,1,680"
-                AbsoluteLayout.LayoutFlags="WidthProportional">
+        <!-- SEARCH + FILTER BAR -->
+        <Grid Grid.Row="1"
+              Padding="10,8"
+              ColumnDefinitions="*,Auto"
+              BackgroundColor="#E8F4FB">
+            <Border Grid.Column="0"
+                    BackgroundColor="White"
+                    StrokeShape="RoundRectangle 20"
+                    Stroke="LightGray"
+                    StrokeThickness="1"
+                    Padding="10,6">
+                <HorizontalStackLayout Spacing="8">
+                    <Label Text="🔍" VerticalOptions="Center" FontSize="14"/>
+                    <Entry x:Name="SearchEntry"
+                           Placeholder="rechercher"
+                           PlaceholderColor="Gray"
+                           TextColor="#333"
+                           VerticalOptions="Center"
+                           HorizontalOptions="FillAndExpand"
+                           TextChanged="OnSearchTextChanged"/>
+                </HorizontalStackLayout>
+            </Border>
+            <Button Grid.Column="1"
+                    Text="🔽"
+                    BackgroundColor="Transparent"
+                    TextColor="#333"
+                    FontSize="18"
+                    Clicked="ToggleCategories"
+                    WidthRequest="40"
+                    Margin="4,0,0,0"/>
+        </Grid>
+
+        <!-- ACTIVE TAG CHIPS -->
+        <ScrollView Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalScrollBarVisibility="Never"
+                    Padding="10,0,10,6"
+                    BackgroundColor="#E8F4FB">
+            <HorizontalStackLayout x:Name="ActiveTagsLayout" Spacing="6"/>
+        </ScrollView>
+
+        <!-- BOOKS GRID + TAG POPUP OVERLAY -->
+        <Grid Grid.Row="3">
+
+            <!-- BOOKS GRID -->
             <ScrollView>
-                <Grid RowDefinitions="Auto, Auto, Auto">
-                    <HorizontalStackLayout Grid.Row="0" Spacing="10" Margin="0,5,0,10">
-                        <CheckBox x:Name="EnableFiltersCheckBox" CheckedChanged="OnEnableFiltersChanged"/>
-                        <Label Text="Activer les filtres" VerticalOptions="Center" FontAttributes="Bold"/>
-                    </HorizontalStackLayout>
-                    
-                    <VerticalStackLayout Grid.Row="1" Spacing="5">
-                        <Label Text="Catégories" FontAttributes="Bold" FontSize="16"/>
-                        <BoxView HeightRequest="1" Color="LightGray" HorizontalOptions="Fill"/>
-                        <CollectionView x:Name="CategoryCollectionView">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <HorizontalStackLayout Spacing="10" Margin="0,5">
-                                        <CheckBox IsChecked="{Binding IsSelected}" CheckedChanged="OnFilterSelectionChanged"/>
-                                        <Label Text="{Binding Label}" VerticalOptions="Center"/>
-                                    </HorizontalStackLayout>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </VerticalStackLayout>
-                    
-                    <VerticalStackLayout Grid.Row="2" Spacing="5" Margin="0,10,0,0">
-                        <Label Text="Tags" FontAttributes="Bold" FontSize="16"/>
-                        <BoxView HeightRequest="1" Color="LightGray" HorizontalOptions="Fill"/>
+                <Grid>
+                    <!-- Tag icon top-left -->
+                    <Button x:Name="TagIconBtn"
+                            Text="🏷"
+                            FontSize="20"
+                            BackgroundColor="Transparent"
+                            TextColor="#555"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start"
+                            Margin="8,4,0,0"
+                            ZIndex="1"
+                            Clicked="OnTagIconClicked"/>
+
+                    <CollectionView x:Name="BooksCollectionView"
+                                    SelectionMode="Single"
+                                    SelectionChanged="OnBookSelected"
+                                    Margin="0,40,0,0">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical"
+                                             Span="2"
+                                             HorizontalItemSpacing="8"
+                                             VerticalItemSpacing="8"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border BackgroundColor="White"
+                                        StrokeShape="RoundRectangle 10"
+                                        StrokeThickness="0"
+                                        Margin="6,0"
+                                        Padding="0">
+                                    <Grid RowDefinitions="*,Auto,Auto,Auto">
+
+                                        <!-- Cover image -->
+                                        <Image Grid.Row="0"
+                                               Source="{Binding ImageUrl}"
+                                               Aspect="AspectFill"
+                                               HeightRequest="160"/>
+
+                                        <!-- Title -->
+                                        <Label Grid.Row="1"
+                                               Text="{Binding Title}"
+                                               FontSize="12"
+                                               FontAttributes="Bold"
+                                               TextColor="#333"
+                                               LineBreakMode="TailTruncation"
+                                               Margin="8,6,8,2"/>
+
+                                        <!-- Author -->
+                                        <HorizontalStackLayout Grid.Row="2"
+                                                               Margin="8,0,8,4"
+                                                               Spacing="4">
+                                            <Label Text="{Binding Author.FirstName}"
+                                                   FontSize="11"
+                                                   TextColor="#888"/>
+                                            <Label Text="{Binding Author.LastName}"
+                                                   FontSize="11"
+                                                   TextColor="#888"/>
+                                        </HorizontalStackLayout>
+
+                                        <!-- Lire button -->
+                                        <Border Grid.Row="3"
+                                                BackgroundColor="#3AAADD"
+                                                StrokeShape="RoundRectangle 6"
+                                                Margin="8,0,8,8"
+                                                Padding="0">
+                                            <Label Text="Lire →"
+                                                   FontSize="12"
+                                                   TextColor="White"
+                                                   HorizontalOptions="Center"
+                                                   Padding="0,6"/>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout HorizontalOptions="Center"
+                                                 VerticalOptions="Center"
+                                                 Spacing="8"
+                                                 Margin="0,40">
+                                <Label Text="📚" FontSize="50" HorizontalOptions="Center"/>
+                                <Label Text="Aucun livre trouvé"
+                                       FontSize="16"
+                                       TextColor="Gray"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                    </CollectionView>
+                </Grid>
+            </ScrollView>
+
+            <!-- FILTER PANEL (overlay) -->
+            <Border x:Name="CategoriesFolder"
+                    BackgroundColor="White"
+                    Stroke="LightGray"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="14"
+                    Margin="10,4,10,0"
+                    IsVisible="False"
+                    VerticalOptions="Start"
+                    ZIndex="10">
+                <ScrollView MaximumHeightRequest="300">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Tags" FontAttributes="Bold" FontSize="15"/>
+                        <BoxView HeightRequest="1" Color="LightGray"/>
                         <CollectionView x:Name="TagCollectionView">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <HorizontalStackLayout Spacing="10" Margin="0,5">
-                                        <CheckBox IsChecked="{Binding IsSelected}" CheckedChanged="OnFilterSelectionChanged"/>
+                                    <HorizontalStackLayout Spacing="10" Margin="0,4">
+                                        <CheckBox IsChecked="{Binding IsSelected}"
+                                                  CheckedChanged="OnFilterSelectionChanged"/>
                                         <Label Text="{Binding Name}" VerticalOptions="Center"/>
                                     </HorizontalStackLayout>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
                     </VerticalStackLayout>
-                </Grid>
-            </ScrollView>
-        </Border>
+                </ScrollView>
+            </Border>
 
-    </AbsoluteLayout>
+            <!-- TAG POPUP (overlay) -->
+            <Border x:Name="TagPopupOverlay"
+                    IsVisible="False"
+                    BackgroundColor="#AA000000"
+                    ZIndex="20">
+                <Border BackgroundColor="White"
+                        StrokeShape="RoundRectangle 12"
+                        Padding="20"
+                        WidthRequest="300"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+
+                        <!-- Close button -->
+                        <Button Grid.Row="0"
+                                Text="✕"
+                                BackgroundColor="Transparent"
+                                TextColor="#555"
+                                HorizontalOptions="End"
+                                Clicked="OnCloseTagPopup"
+                                Padding="0"/>
+
+                        <!-- Title -->
+                        <Border Grid.Row="1"
+                                BackgroundColor="#5BAACC"
+                                StrokeShape="RoundRectangle 6"
+                                Padding="10,8"
+                                Margin="0,0,0,16">
+                            <Label Text="Créer un tag pour ce livre"
+                                   TextColor="White"
+                                   FontAttributes="Bold"
+                                   FontSize="14"
+                                   HorizontalOptions="Center"/>
+                        </Border>
+
+                        <!-- Nom label -->
+                        <Border Grid.Row="2"
+                                BackgroundColor="#5BAACC"
+                                StrokeShape="RoundRectangle 6"
+                                Padding="8,6"
+                                Margin="0,0,0,6">
+                            <Label Text="Nom du tag"
+                                   TextColor="White"
+                                   FontSize="13"/>
+                        </Border>
+
+                        <!-- Nom input -->
+                        <Border Grid.Row="3"
+                                Stroke="LightGray"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 6"
+                                Padding="8,4"
+                                Margin="0,0,0,12">
+                            <Entry x:Name="TagNameEntry"
+                                   Placeholder="A lire"
+                                   FontSize="14"
+                                   TextColor="#333"/>
+                        </Border>
+
+                        <!-- Description label -->
+                        <Border Grid.Row="4"
+                                BackgroundColor="#5BAACC"
+                                StrokeShape="RoundRectangle 6"
+                                Padding="8,6"
+                                Margin="0,0,0,6">
+                            <Label Text="Description du tag"
+                                   TextColor="White"
+                                   FontSize="13"/>
+                        </Border>
+
+                        <!-- Description input -->
+                        <Border Grid.Row="5"
+                                Stroke="LightGray"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 6"
+                                Padding="8,4"
+                                Margin="0,0,0,16">
+                            <Editor x:Name="TagDescriptionEntry"
+                                    Placeholder="Je veux le lire bientôt !"
+                                    FontSize="13"
+                                    TextColor="#333"
+                                    HeightRequest="80"
+                                    AutoSize="Disabled"/>
+                        </Border>
+
+                        <!-- Confirm button -->
+                        <Button Grid.Row="6"
+                                Text="Confirmez"
+                                BackgroundColor="#4CAF50"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="8"
+                                Clicked="OnConfirmTag"/>
+                    </Grid>
+                </Border>
+            </Border>
+
+        </Grid>
+
+        <!-- PAGINATION -->
+        <HorizontalStackLayout Grid.Row="4"
+                                HorizontalOptions="Center"
+                                Spacing="8"
+                                Padding="10"
+                                BackgroundColor="#E8F4FB">
+            <Button Text="‹"
+                    BackgroundColor="Transparent"
+                    TextColor="#333"
+                    FontSize="18"
+                    Clicked="OnPreviousPage"
+                    IsEnabled="{Binding Source={x:Reference BooksPage}, Path=CanGoPrevious}"/>
+            <Label x:Name="PageLabel"
+                   Text="1"
+                   FontAttributes="Bold"
+                   FontSize="15"
+                   TextColor="White"
+                   BackgroundColor="#3AAADD"
+                   Padding="8,4"
+                   VerticalOptions="Center"/>
+            <Button Text="›"
+                    BackgroundColor="Transparent"
+                    TextColor="#333"
+                    FontSize="18"
+                    Clicked="OnNextPage"/>
+        </HorizontalStackLayout>
+
+    </Grid>
 </ContentPage>

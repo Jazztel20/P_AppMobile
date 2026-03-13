@@ -2,14 +2,132 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ReadMe.Views.ReadBookPage"
-             Title="">
-    <VerticalStackLayout>
-        <WebView x:Name="BookWebView" HeightRequest="650">
+             Title=""
+             BackgroundColor="#E8F4FB">
 
-        </WebView>
-        <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
-            <Button Text="Précédent" x:Name="previousBtn" Clicked="OnPreviousClicked" WidthRequest="200"/>
-            <Button Text="Suivant" x:Name="nextBtn" Clicked="OnNextClicked" WidthRequest="200"/>
-        </HorizontalStackLayout>
-    </VerticalStackLayout>
+    <Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
+
+        <!-- HEADER -->
+        <Grid Grid.Row="0"
+              BackgroundColor="#5BAACC"
+              Padding="12,10"
+              ColumnDefinitions="Auto,*,Auto">
+            <Image Grid.Column="0"
+                   Source="readingghostpng.png"
+                   HeightRequest="44"
+                   WidthRequest="44"
+                   VerticalOptions="Center"/>
+            <Label Grid.Column="1"
+                   Text="README"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+            <Border Grid.Column="2"
+                    BackgroundColor="White"
+                    StrokeShape="RoundRectangle 20"
+                    Padding="8,6">
+                <HorizontalStackLayout Spacing="6">
+                    <Image Source="info.png"
+                           HeightRequest="18"
+                           WidthRequest="18"
+                           VerticalOptions="Center"/>
+                    <Label Text="User 1"
+                           FontSize="13"
+                           TextColor="#333"
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- BOOK TITLE + AUTHOR -->
+        <VerticalStackLayout Grid.Row="1"
+                             Padding="16,14,16,6"
+                             BackgroundColor="#E8F4FB"
+                             Spacing="2">
+            <Label x:Name="BookTitleLabel"
+                   Text=""
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="#222"/>
+            <Label x:Name="BookAuthorLabel"
+                   Text=""
+                   FontSize="13"
+                   TextColor="#888"/>
+        </VerticalStackLayout>
+
+        <!-- EPUB CONTENT -->
+        <Border Grid.Row="2"
+                Margin="12,4"
+                BackgroundColor="White"
+                StrokeShape="RoundRectangle 10"
+                StrokeThickness="0"
+                Padding="0">
+            <WebView x:Name="BookWebView"/>
+        </Border>
+
+        <!-- BOTTOM NAVIGATION -->
+        <Grid Grid.Row="3"
+              Padding="12,8"
+              ColumnDefinitions="*,Auto,Auto"
+              BackgroundColor="#E8F4FB">
+            <Button Grid.Column="0"
+                    Text="← Retour à la page d'accueil"
+                    BackgroundColor="Transparent"
+                    TextColor="#555"
+                    FontSize="12"
+                    HorizontalOptions="Start"
+                    Clicked="OnGoHomeClicked"/>
+            <Button Grid.Column="1"
+                    Text="← Page précédente"
+                    BackgroundColor="Transparent"
+                    TextColor="#555"
+                    FontSize="12"
+                    x:Name="previousBtn"
+                    Clicked="OnPreviousClicked"/>
+            <Button Grid.Column="2"
+                    Text="Page suivante →"
+                    BackgroundColor="Transparent"
+                    TextColor="#555"
+                    FontSize="12"
+                    x:Name="nextBtn"
+                    Clicked="OnNextClicked"/>
+        </Grid>
+
+        <!-- FOOTER -->
+        <Grid Grid.Row="4"
+              BackgroundColor="#5BAACC"
+              Padding="14,10"
+              ColumnDefinitions="*,*">
+            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                <Label Text="Suivez-nous"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       FontSize="13"/>
+                <HorizontalStackLayout Spacing="10" Margin="0,4,0,0">
+                    <Label Text="📷" FontSize="18" TextColor="White"/>
+                    <Label Text="f" FontSize="18" TextColor="White" FontAttributes="Bold"/>
+                    <Label Text="in" FontSize="16" TextColor="White" FontAttributes="Bold"/>
+                </HorizontalStackLayout>
+                <Label Text="© Vibe"
+                       TextColor="White"
+                       FontSize="11"
+                       Margin="0,6,0,0"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="1" Spacing="4" HorizontalOptions="End">
+                <Label Text="Contactez-nous"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       FontSize="13"/>
+                <Label Text="vincent.panzetta@eduvaud.ch"
+                       TextColor="White"
+                       FontSize="11"/>
+                <Label Text="+41.79.xxx.xx.xx"
+                       TextColor="White"
+                       FontSize="11"/>
+            </VerticalStackLayout>
+        </Grid>
+
+    </Grid>
 </ContentPage>

@@ -26467,28 +26467,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ps46bhd\\.nuget\\packages\\": {},
+    "C:\\Users\\pb58unc\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ps46bhd\\Documents\\P_AppMobile-ReadMe\\ReadMe\\ReadMe.csproj",
+      "projectUniqueName": "C:\\Users\\pb58unc\\Desktop\\ProjetREADME\\P_AppMobile\\ReadMe\\ReadMe.csproj",
       "projectName": "ReadMe",
-      "projectPath": "C:\\Users\\ps46bhd\\Documents\\P_AppMobile-ReadMe\\ReadMe\\ReadMe.csproj",
-      "packagesPath": "C:\\Users\\ps46bhd\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ps46bhd\\Documents\\P_AppMobile-ReadMe\\ReadMe\\obj\\",
+      "projectPath": "C:\\Users\\pb58unc\\Desktop\\ProjetREADME\\P_AppMobile\\ReadMe\\ReadMe.csproj",
+      "packagesPath": "C:\\Users\\pb58unc\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\pb58unc\\Desktop\\ProjetREADME\\P_AppMobile\\ReadMe\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Microsoft\\Xamarin\\NuGet\\",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\ps46bhd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\pb58unc\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net9.0-android",
