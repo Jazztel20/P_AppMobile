@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ReadMe")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+367683cfa71556988119c7280cffe295fea6175f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+2859f01ca9b83825cdd4e186d0bc5b4c5cd7eb7e")]
 [assembly: System.Reflection.AssemblyProductAttribute("ReadMe")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ReadMe")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

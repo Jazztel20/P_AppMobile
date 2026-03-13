@@ -21,33 +21,28 @@ public partial class ReadBookPage : ContentPage, IQueryAttributable
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (query.TryGetValue("book", out object? bookObj) && bookObj is Book book)
-        {
+        if (query.TryGetValue("book", out object? obj) && obj is Book book)
             _book = book;
-        }
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-
         if (_book != null)
         {
             BookTitleLabel.Text = _book.Title;
             BookAuthorLabel.Text = $"{_book.Author?.FirstName} {_book.Author?.LastName}".Trim();
         }
-
         DownloadAndLoadBook();
     }
 
     private async void DownloadAndLoadBook()
     {
         if (_book is null) return;
-
         try
         {
-            var epubPath = await BookService.GetEpubAsync(_book.Id);
-            await LoadEBook(epubPath);
+            var path = await BookService.GetEpubAsync(_book.Id);
+            await LoadEBook(path);
             await ShowChapter(_currentIndex);
         }
         catch (Exception ex)
@@ -59,32 +54,21 @@ public partial class ReadBookPage : ContentPage, IQueryAttributable
 
     private async Task LoadEBook(string filePath)
     {
-        using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-
         LoadProgressions();
-
+        using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
         _epubBook = await EpubReader.ReadBookAsync(fs);
-
-        _chaptersHtml = _epubBook.ReadingOrder
-            .Select(c => c.Content)
-            .ToList();
-
+        _chaptersHtml = _epubBook.ReadingOrder.Select(c => c.Content).ToList();
         _currentIndex = _progressions.TryGetValue(_book!.Id, out int saved) ? saved : 0;
     }
 
     private async Task ShowChapter(int index)
     {
         if (_epubBook is null || _chaptersHtml.Count == 0) return;
-
         index = Math.Clamp(index, 0, _chaptersHtml.Count - 1);
-
         BookWebView.Source = new HtmlWebViewSource { Html = _chaptersHtml[index] };
-
         _currentIndex = index;
         _progressions[_book!.Id] = _currentIndex;
         SaveProgressions();
-
-        // Update button states
         previousBtn.IsEnabled = _currentIndex > 0;
         nextBtn.IsEnabled = _currentIndex < _chaptersHtml.Count - 1;
     }
@@ -103,7 +87,6 @@ public partial class ReadBookPage : ContentPage, IQueryAttributable
     private async void OnNextClicked(object sender, EventArgs e)
     {
         if (_epubBook is null) return;
-
         if (_currentIndex < _chaptersHtml.Count - 1)
             await ShowChapter(_currentIndex + 1);
         else
@@ -112,8 +95,7 @@ public partial class ReadBookPage : ContentPage, IQueryAttributable
 
     private async void OnPreviousClicked(object sender, EventArgs e)
     {
-        if (_currentIndex > 0)
-            await ShowChapter(_currentIndex - 1);
+        if (_currentIndex > 0) await ShowChapter(_currentIndex - 1);
     }
 
     private async void OnGoHomeClicked(object sender, EventArgs e)
@@ -123,20 +105,17 @@ public partial class ReadBookPage : ContentPage, IQueryAttributable
 
     private void ShowEndScreen()
     {
-        var html = $@"
-        <html><head><style>
-            body {{ display:flex; flex-direction:column; justify-content:center;
-                   align-items:center; height:100vh; font-family:sans-serif;
-                   text-align:center; background:#f8f9fa; }}
-            .card {{ padding:30px; border-radius:15px; background:white;
-                     box-shadow:0 4px 15px rgba(0,0,0,0.1); }}
-            h1 {{ color:#2c3e50; }} p {{ color:#7f8c8d; font-size:1.1em; }}
-        </style></head>
-        <body><div class='card'>
+        var html = $@"<html><head><style>
+            body{{display:flex;flex-direction:column;justify-content:center;
+                 align-items:center;height:100vh;font-family:sans-serif;
+                 text-align:center;background:#f8f9fa;}}
+            .card{{padding:30px;border-radius:15px;background:white;
+                   box-shadow:0 4px 15px rgba(0,0,0,0.1);}}
+            h1{{color:#2c3e50;}} p{{color:#7f8c8d;font-size:1.1em;}}
+        </style></head><body><div class='card'>
             <h1>🎉 Félicitations !</h1>
             <p>Vous avez terminé :<br><strong>{_epubBook?.Title}</strong></p>
         </div></body></html>";
-
         BookWebView.Source = new HtmlWebViewSource { Html = html };
         nextBtn.IsEnabled = false;
     }

@@ -1,0 +1,31 @@
+meta {
+  name: PUT BOOKS
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://localhost:3333/books/3
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "Le Seigneur des Anneaux - Édition révisée",
+    "number_of_pages": 1200,
+    "pdf_link": "https://example.com/books/lotr_updated.pdf",
+    "abstract": "Une version révisée de l’histoire épique de Frodon et de la quête de l’anneau.",
+    "editor": "Christian Bourgois Éditeur",
+    "edition_year": 2023,
+    "image_path": "https://example.com/images/lotr-cover-updated.jpg",
+    "category_id": 1,
+    "writer_id": 1
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,7 +1,7 @@
 using ReadMe.Models;
 using ReadMe.Services;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+using Microsoft.Maui.Controls.Shapes;
 
 namespace ReadMe.Views;
 
@@ -10,18 +10,13 @@ public partial class BooksPage : ContentPage
     public ObservableCollection<Book> Books { get; set; } = new();
     public ObservableCollection<Tag> Tags { get; set; } = new();
 
-    private bool _isSortedNew = true;
     private bool _isCategoriesVisible = false;
     private int _page = 1;
     private Book? _selectedBookForTag;
 
-    // Pagination
-    public bool CanGoPrevious => _page > 1;
-
     public BooksPage()
     {
         InitializeComponent();
-        BindingContext = this;
         BooksCollectionView.ItemsSource = Books;
         TagCollectionView.ItemsSource = Tags;
     }
@@ -45,43 +40,35 @@ public partial class BooksPage : ContentPage
         RefreshActiveTagChips();
     }
 
-    // ─── Load & display ────────────────────────────────────────────────────────
+    // ── Load ───────────────────────────────────────────────────────────────────
 
     private async Task LoadBooks(int page)
     {
-        var newBooks = await BookService.GetBooksAsync(page);
-        UpdateBooksList(newBooks);
+        var books = await BookService.GetBooksAsync(page);
+        // Sort newest first by default
+        var sorted = books.OrderByDescending(b => b.CreatedAt).ToList();
+        Books.Clear();
+        foreach (var b in sorted) Books.Add(b);
         PageLabel.Text = page.ToString();
     }
 
-    private void UpdateBooksList(IEnumerable<Book> newBooks)
-    {
-        var sorted = _isSortedNew
-            ? newBooks.OrderByDescending(b => b.CreatedAt).ToList()
-            : newBooks.OrderBy(b => b.CreatedAt).ToList();
-
-        Books.Clear();
-        foreach (var book in sorted)
-            Books.Add(book);
-    }
-
-    // ─── Search ────────────────────────────────────────────────────────────────
+    // ── Search ─────────────────────────────────────────────────────────────────
 
     private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        var query = e.NewTextValue?.Trim();
-        if (string.IsNullOrEmpty(query))
+        var q = e.NewTextValue?.Trim() ?? "";
+        if (string.IsNullOrEmpty(q))
         {
             await LoadBooks(_page);
             return;
         }
-
         var all = await BookService.GetBooksAsync(1);
-        var filtered = all.Where(b => b.Title.Contains(query, StringComparison.OrdinalIgnoreCase));
-        UpdateBooksList(filtered);
+        var filtered = all.Where(b => b.Title.Contains(q, StringComparison.OrdinalIgnoreCase));
+        Books.Clear();
+        foreach (var b in filtered) Books.Add(b);
     }
 
-    // ─── Filter panel (tags) ───────────────────────────────────────────────────
+    // ── Filter dropdown ────────────────────────────────────────────────────────
 
     private void ToggleCategories(object sender, EventArgs e)
     {
@@ -93,23 +80,22 @@ public partial class BooksPage : ContentPage
     {
         await ApplyTagFiltersAsync();
         RefreshActiveTagChips();
+        if (Tags.Any(t => t.IsSelected))
+            ChipsScrollView.IsVisible = true;
+        else
+            ChipsScrollView.IsVisible = false;
     }
 
     private async Task ApplyTagFiltersAsync()
     {
-        var selectedTags = Tags.Where(t => t.IsSelected).ToArray();
-
-        if (selectedTags.Length == 0)
-        {
-            await LoadBooks(_page);
-            return;
-        }
-
-        var filtered = await TagService.GetBooksPerMultipleTags(selectedTags);
-        UpdateBooksList(filtered);
+        var selected = Tags.Where(t => t.IsSelected).ToArray();
+        if (selected.Length == 0) { await LoadBooks(_page); return; }
+        var filtered = await TagService.GetBooksPerMultipleTags(selected);
+        Books.Clear();
+        foreach (var b in filtered) Books.Add(b);
     }
 
-    // ─── Active tag chips ─────────────────────────────────────────────────────
+    // ── Active tag chips ───────────────────────────────────────────────────────
 
     private void RefreshActiveTagChips()
     {
@@ -118,53 +104,53 @@ public partial class BooksPage : ContentPage
         {
             var chip = new Border
             {
-                BackgroundColor = Color.FromArgb("#5BAACC"),
-                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 14 },
+                BackgroundColor = Color.FromArgb("#4A9CC7"),
+                StrokeShape = new RoundRectangle { CornerRadius = 14 },
                 Padding = new Thickness(10, 4),
-            };
-            var lbl = new Label
-            {
-                Text = $"{tag.Name} ✕",
-                TextColor = Colors.White,
-                FontSize = 12,
-                VerticalOptions = LayoutOptions.Center
+                Content = new Label
+                {
+                    Text = $"{tag.Name} ✕",
+                    TextColor = Colors.White,
+                    FontSize = 12,
+                    VerticalOptions = LayoutOptions.Center
+                }
             };
             var tap = new TapGestureRecognizer();
-            tap.Tapped += (s, e) =>
+            Tag capturedTag = tag;
+            tap.Tapped += async (s, e) =>
             {
-                tag.IsSelected = false;
+                capturedTag.IsSelected = false;
                 RefreshActiveTagChips();
-                _ = ApplyTagFiltersAsync();
+                await ApplyTagFiltersAsync();
+                ChipsScrollView.IsVisible = Tags.Any(t => t.IsSelected);
             };
             chip.GestureRecognizers.Add(tap);
-            chip.Content = lbl;
             ActiveTagsLayout.Children.Add(chip);
         }
     }
 
-    // ─── Book selection → navigate to BookInfoPage ────────────────────────────
+    // ── Book selection ─────────────────────────────────────────────────────────
 
     private async void OnBookSelected(object sender, SelectionChangedEventArgs e)
     {
-        var collection = (CollectionView)sender;
-        if (collection.SelectedItem is Book book)
+        var cv = (CollectionView)sender;
+        if (cv.SelectedItem is Book book)
         {
-            var navParams = new Dictionary<string, object> { { "book", book } };
-            await Shell.Current.GoToAsync("BookInfoPage", navParams);
-            collection.SelectedItem = null;
+            _selectedBookForTag = book;
+            var nav = new Dictionary<string, object> { { "book", book } };
+            await Shell.Current.GoToAsync("BookInfoPage", nav);
+            cv.SelectedItem = null;
         }
     }
 
-    // ─── Tag icon → open popup ────────────────────────────────────────────────
+    // ── Tag popup ──────────────────────────────────────────────────────────────
 
     private void OnTagIconClicked(object sender, EventArgs e)
     {
-        // Opens popup for first book or last selected — you can wire this
-        // to a specific book later; for now opens general create-tag popup.
         _selectedBookForTag = Books.FirstOrDefault();
-        TagPopupOverlay.IsVisible = true;
         TagNameEntry.Text = string.Empty;
         TagDescriptionEntry.Text = string.Empty;
+        TagPopupOverlay.IsVisible = true;
     }
 
     private void OnCloseTagPopup(object sender, EventArgs e)
@@ -182,16 +168,14 @@ public partial class BooksPage : ContentPage
         }
 
         var newTag = await TagService.AddTag(name);
-
         if (newTag != null)
         {
-            // Attach to selected book if available
             if (_selectedBookForTag != null)
                 await TagService.AddBookToTag(newTag.Id, _selectedBookForTag.Id);
 
             Tags.Add(newTag);
             TagPopupOverlay.IsVisible = false;
-            await DisplayAlert("Succès", $"Tag \"{name}\" créé avec succès !", "OK");
+            await DisplayAlert("Succès", $"Tag \"{name}\" créé !", "OK");
         }
         else
         {
@@ -199,22 +183,16 @@ public partial class BooksPage : ContentPage
         }
     }
 
-    // ─── Pagination ───────────────────────────────────────────────────────────
+    // ── Pagination ─────────────────────────────────────────────────────────────
 
     private async void OnNextPage(object sender, EventArgs e)
     {
         _page++;
         await LoadBooks(_page);
-        OnPropertyChanged(nameof(CanGoPrevious));
     }
 
     private async void OnPreviousPage(object sender, EventArgs e)
     {
-        if (_page > 1)
-        {
-            _page--;
-            await LoadBooks(_page);
-            OnPropertyChanged(nameof(CanGoPrevious));
-        }
+        if (_page > 1) { _page--; await LoadBooks(_page); }
     }
 }

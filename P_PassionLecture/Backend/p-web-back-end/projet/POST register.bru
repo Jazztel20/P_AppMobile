@@ -1,0 +1,26 @@
+meta {
+  name: POST register
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3333/user/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "Alloo",
+    "isAdmin": false,
+    "password": "123456789"
+  }
+  
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
